@@ -1,0 +1,137 @@
+@font-face {
+  font-family: "aion-window-icon"; /* Project id 3670186 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1702537214936') format('woff2'),
+       url('iconfont.woff?t=1702537214936') format('woff'),
+       url('iconfont.ttf?t=1702537214936') format('truetype');
+}
+
+.aion-window-icon {
+  font-family: "aion-window-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-luyouqi:before {
+  content: "\e609";
+}
+
+.icon-jiankong:before {
+  content: "\e615";
+}
+
+.icon-jiankong-copy:before {
+  content: "\e914";
+}
+
+.icon-luyouqi-copy:before {
+  content: "\e915";
+}
+
+.icon-xiangmuguanli:before {
+  content: "\e68f";
+}
+
+.icon-xiangmuguanli-copy:before {
+  content: "\e913";
+}
+
+.icon-gerenzhongxin:before {
+  content: "\e659";
+}
+
+.icon-gerenzhongxin-copy:before {
+  content: "\e90f";
+}
+
+.icon-dianshiju-copy-copy:before {
+  content: "\e90c";
+}
+
+.icon-dianshiju-copy-copy-copy:before {
+  content: "\e910";
+}
+
+.icon-shebei-copy:before {
+  content: "\e911";
+}
+
+.icon-xitongguanli3-copy:before {
+  content: "\e912";
+}
+
+.icon-shebei:before {
+  content: "\e838";
+}
+
+.icon-dianshi2:before {
+  content: "\e90a";
+}
+
+.icon-xitongguanli3:before {
+  content: "\e620";
+}
+
+.icon-drxx02:before {
+  content: "\e71d";
+}
+
+.icon-yuandian1:before {
+  content: "\e62f";
+}
+
+.icon-yuandian1-copy:before {
+  content: "\e90d";
+}
+
+.icon-user:before {
+  content: "\e613";
+}
+
+.icon-zuojiantou:before {
+  content: "\e612";
+}
+
+.icon-youjiantou:before {
+  content: "\e622";
+}
+
+.icon-guanbi:before {
+  content: "\e641";
+}
+
+.icon-weibiaoti-_huabanfuben:before {
+  content: "\e60f";
+}
+
+.icon-jurassic_Window-max:before {
+  content: "\e6fb";
+}
+
+.icon-zuidahua:before {
+  content: "\e610";
+}
+
+.icon-zuixiaohua:before {
+  content: "\e611";
+}
+
+.icon-wifi:before {
+  content: "\e65f";
+}
+
+.icon-caisechengdu:before {
+  content: "\e607";
+}
+
+.icon-windows:before {
+  content: "\e63c";
+}
+
+.icon-windows-copy:before {
+  content: "\e90e";
+}
+
