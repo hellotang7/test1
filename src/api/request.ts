@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useAuthStore} from '@/stores/authStore';
 // import {Message} from 'view-ui-plus';
 import router from '@/router';
+import { showFailToast } from 'vant';
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL,
@@ -28,7 +29,8 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use(
     (response) => {
         if (response.data.code === 401) {
-            // Message.error(response.data.msg);
+            showFailToast(response.data.msg);
+
             router.push({name: 'login'});
 
         }

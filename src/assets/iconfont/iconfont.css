@@ -2,9 +2,9 @@
   font-family: "aion-window-icon"; /* Project id 3670186 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1702537214936') format('woff2'),
-       url('iconfont.woff?t=1702537214936') format('woff'),
-       url('iconfont.ttf?t=1702537214936') format('truetype');
+       url('iconfont.woff2?t=1702618381173') format('woff2'),
+       url('iconfont.woff?t=1702618381173') format('woff'),
+       url('iconfont.ttf?t=1702618381173') format('truetype');
 }
 
 .aion-window-icon {
@@ -13,6 +13,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shouye:before {
+  content: "\e62e";
+}
+
+.icon-shouye-copy:before {
+  content: "\e916";
 }
 
 .icon-luyouqi:before {

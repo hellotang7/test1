@@ -1,40 +1,83 @@
 <template>
 
+<div class='home'>
+  <van-row :gutter='[20, 20]'>
+    <van-col span='6'>
 
-    <van-row :gutter='[20, 20]'>
-      <van-col span='6'>
-        <Icon appName='设备管理' iconSrc='icon-xiangmuguanli' />
-      </van-col>
-      <van-col span='6'>
-        <Icon appName='播放' iconSrc='icon-dianshiju-copy-copy-copy' />
-      </van-col>
-      <van-col span='6'>
-        <Icon appName='监控' iconSrc='icon-jiankong-copy' />
-      </van-col>
+      <RouterLink to='/equipment'>
+        <Icon appName='设备管理' iconSrc='icon-shebei' />
+      </RouterLink>
+    </van-col>
+<!--    <van-col span='6'>-->
+<!--      <RouterLink to='/home' />-->
+<!--      <Icon appName='播放' iconSrc='icon-dianshiju-copy-copy-copy' />-->
+<!--    </van-col>-->
+<!--    <van-col span='6'>-->
+<!--      <Icon appName='监控' iconSrc='icon-jiankong-copy' />-->
+<!--    </van-col>-->
+    <van-col span='6'>
+      <RouterLink to='/1'>
+      <Icon appName='试验' iconSrc='icon-yuandian1-copy' />
+      </RouterLink>
 
-    </van-row>
+    </van-col>
+
+  </van-row>
 
 
-
-
+  <Nav />
+</div>
 </template>
 
 <script setup lang='ts'>
+  import Nav from '@/components/Navbar.vue';
+  import { onMounted } from 'vue';
+  import { currentUserInfo } from '@/api/auth';
+  import { useAuthStore } from '@/stores/authStore';
+  import { showFailToast } from 'vant';
 
+  const authStore = useAuthStore();
+
+
+  onMounted(() => {
+    currentUserInfo()
+      .then((res) => {
+          if (res.data.code === 200) {
+            authStore.setUserInfo(res.data.data.user);
+            authStore.setAuthenticated(res.data.success);
+          }
+        }
+      )
+      .catch((error) => {
+        showFailToast(error.data.msg);
+
+      });
+
+  });
 
 </script>
 
 <style lang='scss' scoped>
 
+.home{
+  height: 100%;
+  background-image: url("@/assets/img/ios-bg.jpg");
+  background-position: center;
+  background-size: cover;
 
-  .van-row {
-    border: 1px solid red;
+  &::before {
+    content: "";
+    position: absolute; /* 一定要用绝对定位 */
+    width: 100%;
     height: 100%;
-    //background-image: url("@/assets/img/desktopWallpaper.jpg");
+    backdrop-filter: blur(1.4px); /* 模糊半径 */
+  }
+}
+  .van-row {
     overflow: hidden;
-    background-position: center;
-    background-size: cover;
-    padding: 20px  20px  80px  20px;
+    padding: 20px 20px 80px 20px;
+
+
   }
 
 

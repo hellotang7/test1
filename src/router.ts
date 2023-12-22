@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes = [
-  // {
-  //   name: 'notFound',
-  //   path: '/:path(.*)+',
-  //   redirect: '/home'
-  // },
+  {
+    name: 'notFound',
+    path: '/:path(.*)+',
+    redirect: '/home'
+  },
   { path: '/', redirect: '/home' },
   {
     name: 'home',
@@ -13,18 +13,18 @@ const routes = [
     component: () => import('@/view/Home/index.vue'),
     meta: {
       title: '首页'
-    },
-    children: [
-      // { path: '', redirect: '/home/equipment' },
-      {
-        path: 'equipment',
-        name: 'equipment',
-        component: () => import('@/components/Tags/Equipment/index.vue'),
-        meta: {
-          title: '设备管理'
-        }
-      }
-    ]
+    }
+    // children: [
+    //   // { path: '', redirect: '/home/equipment' },
+    //   {
+    //     path: 'equipment',
+    //     name: 'equipment',
+    //     component: () => import('@/components/Tags/Equipment/index.vue'),
+    //     meta: {
+    //       title: '设备管理'
+    //     }
+    //   }
+    // ]
   },
   {
     name: 'user',
@@ -40,6 +40,30 @@ const routes = [
     component: () => import('@/view/login/index.vue'),
     meta: {
       title: '登录'
+    }
+  },
+  {
+    name: 'equipment',
+    path: '/equipment',
+    component: () => import('@/components/Tags/Equipment/index.vue'),
+    meta: {
+      title: '设备管理'
+    }
+  },
+  {
+    name: 'test',
+    path: '/1',
+    component: () => import('@/test.vue'),
+    meta: {
+      title: '试验'
+    }
+  },
+  {
+    name: 'title',
+    path: '/2',
+    component: () => import('@/components/Title.vue'),
+    meta: {
+      title: '试验'
     }
   }
 ];

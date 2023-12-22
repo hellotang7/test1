@@ -16,7 +16,8 @@
 
   const handleClick = (appName) => {
     // 处理图标点击事件
-    console.log(`打开应用: ${appName}`);
+
+    console.log(appName ? `打开应用: ${appName}`:'切换了nav');
   };
 
   const handleMouseDown = () => {
@@ -54,24 +55,24 @@
 
 
     .icon-container {
-      width: 68px;
-      height: 68px;
+      width: 58px;
+      height: 58px;
       border-radius: 15px;
       overflow: hidden;
       margin-bottom: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #00F9E5, #6772FF);
       .aion-window-icon {
-        font-size: 40px;
-        //width: 100%;
-        //height: 100%;
-        //object-fit: cover;
+        font-size: 38px;
       }
     }
 
     .label {
       font-size: 14px;
-      color: #333;
+      color: #fff;
     }
 
   }
