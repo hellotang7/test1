@@ -1,8 +1,8 @@
 <template>
 
   <div class='wrapper'>
-    <div class='title'>管理员登录
 
+    <div class='title'>管理员登录
       <div class='welcome'>Welcome</div>
     </div>
 
@@ -44,7 +44,7 @@
   import { useRouter } from 'vue-router';
   import {useAuthStore} from '@/stores/authStore';
   import { getCurrentInstance, onMounted, ref } from 'vue';
-  import { loginUserByUsernameAndPassword } from '@/api/auth';
+  import { currentUserInfo, loginUserByUsernameAndPassword } from '@/api/auth';
   import { showFailToast, showNotify, showSuccessToast } from 'vant';
 
 
@@ -71,9 +71,9 @@
           localStorage.setItem('token', res.data.data.token);
 
           showSuccessToast(res.data.msg);
-          // showNotify({ type: 'success', message: res.data.msg });
-
           router.push({ name: 'home' });
+
+
         } else{
           // showNotify({ type: 'danger', message: res.data.msg });
           showFailToast(res.data.msg);
@@ -95,7 +95,9 @@
   .wrapper {
     width: 100%;
     height: 100%;
+    //border: 1px solid red;
     display: flex;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -104,7 +106,12 @@
       text-align: center;
       font-size: 24px;
       font-weight: 700;
-      margin-top: -18vh;
+      //margin-top: -18vh;
+
+    }
+
+    .welcome {
+
 
     }
 
@@ -117,12 +124,12 @@
       width: 100%;
       height: 30vh;
       margin: 4vh 0;
-    }
+      //border: 1px solid red;
 
-    .welcome {
     }
 
     .van-form {
+
       width: 100%;
       .van-cell.van-field{
         height: 68px;

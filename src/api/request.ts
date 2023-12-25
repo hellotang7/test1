@@ -29,8 +29,8 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use(
     (response) => {
         if (response.data.code === 401) {
-            showFailToast(response.data.msg);
 
+            showFailToast(response.data.msg);
             router.push({name: 'login'});
 
         }
@@ -38,9 +38,8 @@ service.interceptors.response.use(
         return response;
     },
     (error) => {
-        // Message.error('响应错误');
-
-        router.push({name: 'login'});
+        showFailToast(error.data.msg);
+        // router.push({name: 'login'});
         // 处理响应错误
 
         return Promise.reject(error);

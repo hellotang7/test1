@@ -12,12 +12,32 @@
 <script lang="ts" setup>
   import Nav from '@/components/Navbar.vue'
   import { useAuthStore } from '@/stores/authStore';
-  import { logout } from '@/api/auth';
+  import { currentUserInfo, logout } from '@/api/auth';
   import router from '@/router';
   import { showFailToast, showSuccessToast } from 'vant';
+  import { onMounted } from 'vue';
+
+  const authStore = useAuthStore();
+  onMounted(() => {
+    currentUserInfo()
+      .then((res) => {
+          if (res.data.code === 200) {
+            authStore.setUserInfo(res.data.data.user);
+            authStore.setAuthenticated(res.data.success);
+          }
+        }
+      )
+      .catch((error) => {
+        showFailToast(error.data.msg);
+
+      });
+
+  });
+
 
   const userQuit = async () => {
-    const isAuthenticated = useAuthStore().isAuthenticated;
+    const isAuthenticated = localStorage.getItem('Authenticated')
+
     console.log(isAuthenticated);
     if (isAuthenticated) {
       logout().then((res) => {

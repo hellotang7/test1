@@ -32,8 +32,8 @@
   align-items: center;
   justify-content: space-evenly;
 
-  .router-link-exact-active{
-    fill: rgba(254, 166, 65, 1);
-  }
+  //.router-link-exact-active{
+  //  fill: rgba(254, 166, 65, 1);
+  //}
 }
 </style>

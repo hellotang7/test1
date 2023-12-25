@@ -1,26 +1,26 @@
 <template>
-  <div id='app'>
+  <div id='app' :style="{ height: appHeight }">
       <router-view />
   </div>
 </template>
 
-<style lang='scss'>
-  #app {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+<script lang='ts' setup>
+  import { ref, onMounted } from 'vue';
 
-    .desktop {
-      height: calc(100vh - 50px);
-    }
-  }
+  const appHeight = ref('100vh');
+  onMounted(() => {
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+  });
 
-  body {
-    /*font-size: 16px;*/
-    /*background-color: #f8f8f8;*/
-    /*-webkit-font-smoothing: antialiased;*/
+  function setViewportHeight() {
+    const viewportHeight = window.innerHeight;
+    appHeight.value = `${viewportHeight}px`;
   }
+</script>
+
+<style scoped lang='scss'>
+
+
 </style>

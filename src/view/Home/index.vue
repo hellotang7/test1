@@ -1,36 +1,33 @@
 <template>
 
-<div class='home'>
-  <van-row :gutter='[20, 20]'>
-    <van-col span='6'>
+  <div class='home'>
+    <van-row :gutter='[20, 20]'>
+      <van-col span='6'>
 
-      <RouterLink to='/equipment'>
-        <Icon appName='设备管理' iconSrc='icon-shebei' />
-      </RouterLink>
-    </van-col>
-<!--    <van-col span='6'>-->
-<!--      <RouterLink to='/home' />-->
-<!--      <Icon appName='播放' iconSrc='icon-dianshiju-copy-copy-copy' />-->
-<!--    </van-col>-->
-<!--    <van-col span='6'>-->
-<!--      <Icon appName='监控' iconSrc='icon-jiankong-copy' />-->
-<!--    </van-col>-->
-    <van-col span='6'>
-      <RouterLink to='/1'>
-      <Icon appName='试验' iconSrc='icon-yuandian1-copy' />
-      </RouterLink>
+        <RouterLink to='/equipment'>
+          <Icon appName='设备管理' iconSrc='icon-shebei' />
 
-    </van-col>
+        </RouterLink>
+      </van-col>
 
-  </van-row>
+      <van-col span='6'>
+        <RouterLink to='/1'>
+          <Icon appName='试验' iconSrc='icon-yuandian1-copy' />
+        </RouterLink>
+
+      </van-col>
+
+    </van-row>
 
 
-  <Nav />
-</div>
+    <Nav />
+  </div>
 </template>
 
 <script setup lang='ts'>
   import Nav from '@/components/Navbar.vue';
+  // import Icon from '@/components/Icon.vue'
+
   import { onMounted } from 'vue';
   import { currentUserInfo } from '@/api/auth';
   import { useAuthStore } from '@/stores/authStore';
@@ -59,20 +56,22 @@
 
 <style lang='scss' scoped>
 
-.home{
-  height: 100%;
-  background-image: url("@/assets/img/ios-bg.jpg");
-  background-position: center;
-  background-size: cover;
-
-  &::before {
-    content: "";
-    position: absolute; /* 一定要用绝对定位 */
-    width: 100%;
+  .home {
     height: 100%;
-    backdrop-filter: blur(1.4px); /* 模糊半径 */
+    width: 100%;
+    background-image: url("@/assets/img/ios-bg.jpg");
+    background-position: center;
+    background-size: cover;
+
+    &::before {
+      content: "";
+      position: absolute; /* 一定要用绝对定位 */
+      width: 100%;
+      height: 100%;
+      //backdrop-filter: blur(1.4px); /* 模糊半径 */
+    }
   }
-}
+
   .van-row {
     overflow: hidden;
     padding: 20px 20px 80px 20px;
