@@ -1,7 +1,6 @@
 <template>
 
   <div class='home'>
-<!--    <Title title='首页' :Black='false' />-->
 
     <van-row :gutter='[20, 20]'>
       <van-col span='6'>
@@ -11,12 +10,12 @@
         </RouterLink>
       </van-col>
 
-<!--      <van-col span='6'>-->
-<!--        <RouterLink to='/1'>-->
-<!--          <Icon appName='试验' name='warn-o' />-->
-<!--        </RouterLink>-->
+      <!--      <van-col span='6'>-->
+      <!--        <RouterLink to='/1'>-->
+      <!--          <Icon appName='试验' name='warn-o' />-->
+      <!--        </RouterLink>-->
 
-<!--      </van-col>-->
+      <!--      </van-col>-->
 
     </van-row>
 
@@ -27,7 +26,6 @@
 
 <script setup lang='ts'>
   import Nav from '@/components/Navbar.vue';
-  // import Icon from '@/components/Icon.vue'
 
   import { onMounted } from 'vue';
   import { currentUserInfo } from '@/api/auth';
@@ -71,6 +69,8 @@
       height: 100%;
       //backdrop-filter: blur(1.4px); /* 模糊半径 */
     }
+
+
   }
 
   .van-row {

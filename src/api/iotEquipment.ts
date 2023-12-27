@@ -145,6 +145,17 @@ export const reportData = (data: any) => {
     })
 }
 
+export const powerOffAll = () => {
+    // @ts-ignore
+    return request({
+        url: '/iotEquipment/powerOffAll',
+        method: "post",
+        header: {
+            "Content-type": "application/json",
+        },
+    })
+}
+
 
 
 

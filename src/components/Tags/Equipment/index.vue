@@ -1,7 +1,8 @@
 <template>
   <div class='equipment'>
-    <Title title='设备管理' :Black='true' />
+    <Title :dynamicTitle="'设备管理'" :showLeftButton="true" :showRightButton="true" RightButtonText='一键断电'   @click-right="powerOffWithOneClick"/>
 
+<!--    <MyNavBar :dynamicTitle="pageTitle" :showLeftButton="true" :showRightButton="true" />-->
 
     <van-dropdown-menu ref='menuRef'>
       <van-dropdown-item v-model='value' :options='options' />
@@ -29,17 +30,13 @@
     </van-dropdown-menu>
 
     <div v-show='value===0'>
-      <van-notice-bar color="#1989fa" background="#ecf9ff" >
-        防入侵监测盒: <van-icon name='newspaper-o' />、播放器:<van-icon name='play-circle-o' />、摄像头:<van-icon name="video-o" />
-      </van-notice-bar>
+
       <van-pull-refresh v-model='refreshing' @refresh='onRefresh' style='min-height: 100vh;'>
 
-        <van-list v-model:loading='loading' :finished='finished' finished-text='没有更多了' @load='onLoad'>
-          <van-cell v-for='item in equipmentList' :key='item.value' :title='item.name +1'>
+<!--        <van-button size='mini'  color="#fa452f" plain  @click='powerOffWithOneClick'>一键断电</van-button>-->
 
-            <van-icon :class="item.workStatus===1 ? 'i':''" v-show="item.defNo === 'AION_PLAYER'" name='play-circle-o' />
-            <van-icon :class="item.workStatus===1 ? 'i':''" v-show="item.defNo === 'EZVIZ_CAMERA'" name='video-o' />
-            <van-icon :class="item.workStatus===1 ? 'i':''" v-show="item.defNo === 'AION_FRQJCH' || item.defNo === 'NWD_FRQJCH'" name='newspaper-o' />
+        <van-list v-model:loading='loading' :finished='finished' finished-text='没有更多了' @load='onLoad'>
+          <van-cell center v-for='item in equipmentList' :key='item.value' :title='item.name'  :label="item.equipmentDef.name" >
 
             <van-button
               v-if="item.defNo === 'AION_FRQJCH' || item.defNo === 'NWD_FRQJCH'"
@@ -50,13 +47,13 @@
               继电器
             </van-button>
 
-<!--            <van-button-->
-<!--              :type="item.workStatus===1 ? 'success':'default'"-->
-<!--              :disabled='item.workStatus===1 ? false:true'-->
-<!--              size='mini'-->
-<!--            >-->
-<!--              {{ item.workStatus === 1 ? '在线' : '离线' }}-->
-<!--            </van-button>-->
+                        <van-button
+                          :type="item.workStatus===1 ? 'success':'default'"
+                          :disabled='item.workStatus===1 ? false:true'
+                          size='mini'
+                        >
+                          {{ item.workStatus === 1 ? '在线' : '离线' }}
+                        </van-button>
 
             <van-popover :actions='equipmentActions' @select='((val)=>{equipmentOnOffActions(val,item.no)})'
                          :offset='[-6, 0]'>
@@ -64,11 +61,7 @@
                 <van-button type='primary' size='mini'>开关选项</van-button>
               </template>
             </van-popover>
-
-
           </van-cell>
-
-
         </van-list>
       </van-pull-refresh>
       <van-back-top />
@@ -88,15 +81,38 @@
   import Title from '@/components/Title.vue';
   import MyPicker from '@/components/CityPicker.vue';
   import { findListByTableParameter } from '@/api/system';
-  import { ctrlRelay, restart } from '@/api/iotEquipment';
+  import { ctrlRelay, powerOffAll, restart } from '@/api/iotEquipment';
   import { closeToast, showLoadingToast, showToast } from 'vant';
-  import { showConfirmDialog } from 'vant/es';
-
-
+  import { showConfirmDialog, showNotify } from 'vant/es';
+  // import 'vant/es/notify/style'
   onMounted(() => {
     onLoad();
   });
 
+  const powerOffWithOneClick=()=>{
+    showConfirmDialog({
+      message:
+        '确认要一键断电吗?',
+
+    })
+      .then(() => {
+        // powerOffAll().then((res) => {
+        //     if (res.data.success) {
+        // showToast({ message:res.data.msg, position: 'top' });
+        //
+        //     } else {
+        // showToast({ message:res.data.msg, position: 'top' });
+        //     }
+        // }).catch(() => {
+        // showToast({ message:'请求异常', position: 'top' });
+        // });
+        showToast({ message:'假的，没用哈哈哈', position: 'top' });
+
+      })
+      .catch(() => {
+        // on cancel
+      });
+  }
 
   const menuRef = ref(null);
   const itemRef = ref(null);
@@ -287,23 +303,19 @@
       margin-top: 46px;
     }
 
+    .van-button.van-button--default.van-button--mini.van-button--plain{
+      position: fixed;
+      z-index: 10000;
+      top: 11px;
+      right: 11px;
+      //line-height: 46px;
+    }
 
     .van-cell__title {
 
     }
 
     .van-cell__value {
-
-
-      .van-icon {
-        position: absolute;
-        left: 0;
-        line-height: 29px;
-
-      }
-      .i{
-        color: #07c160;
-      }
       .van-popover__wrapper {
         margin-left: 4px;
       }

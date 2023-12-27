@@ -1,22 +1,24 @@
 <template>
-  <div class='user'>
-    <div>
-      <span><div><img :src='ImageUrl'></div></span>
+
+  <section class='overlay'>
+
+    <div class='userIcon'>
+      <van-image
+        class='icon'
+        :src='ImageUrl'
+        fit='contain'
+
+      />
     </div>
-    <div>
-      <span>用户名：</span>
-      <span>{{ formData.username }}</span>
-    </div>
-    <div>
-      <span>昵称：</span>
-      <span>{{ formData.nickname }}</span>
+    <div class='userCurrent'>
+      <h2>{{ formData.username }}</h2>
+      <p>欢迎用户</p>
+      <van-button class='button' @click='userQuit' type='primary'>退出登录</van-button>
     </div>
 
 
-    <van-button @click='userQuit' type='primary'>退出登录</van-button>
+  </section>
 
-
-  </div>
   <Nav />
 
 </template>
@@ -81,31 +83,54 @@
 </script>
 
 <style lang='scss'>
-  .user {
 
-    height: 100%;
-    background-image: url("@/assets/img/ios-bg.jpg");
-    background-position: center;
-    background-size: cover;
+  .overlay {
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    //border: 1px solid red;
+    justify-content: center;
+    background-image: url("@/assets/img/ios-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100%;
 
-
-    div{
-
-      width: 100%;
+    .userIcon {
+      font-size: 5.28vh;
+      height: 11.15vh;
+      width: 11.15vh;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 20px 0;
-      margin-bottom: 30px;
-        div{
+      border-radius: 6vh;
 
-          height: 150px;
-          width: 150px;
+      background-color: #D5D8DE;
+      border: 0.29vh solid white;
+      color: #fff;
+      box-shadow: 2px 4px 11px #00000040;
+      margin-top: 6vh;
+      overflow: hidden;
+
+      .icon {
+        color: white;
+      }
+    }
+
+    .userCurrent {
+
+      text-align: center;
+
+      margin-top: 4vh;
+
+      > p {
+        margin-top: 2vh;
+
+      }
+
+      .button {
+        margin-top: 12vh;
+        width: calc(100vw - 128px);
       }
     }
   }

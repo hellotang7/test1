@@ -4,7 +4,7 @@ import 'vant/es/toast/style';
 import './assets/css/reset.css';
 import "./assets/iconfont/iconfont.css";
 // import VConsole from 'vconsole';
-
+import 'vant/lib/index.css'
 
 import { createPinia } from 'pinia';
 import router from './router';

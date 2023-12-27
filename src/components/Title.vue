@@ -1,39 +1,43 @@
 <template>
   <van-nav-bar
-    :title="title"
-    :left-text="Back ? '返回' : null"
-    :left-arrow="Back"
-    @click-left="goBack"
+    :title="dynamicTitle"
+    :left-text="leftText"
+    :right-text="rightText"
+    :left-arrow="showLeftArrow"
+    @click-left="onClickLeft"
+    @click-right="onClickRight"
   />
 </template>
 
-<script setup lang='ts'>
-  import { useRouter } from 'vue-router';
+<script setup>
+  import { showToast } from 'vant';
+  import { computed } from 'vue';
 
-  const router = useRouter()
+  const props = defineProps(['leftArrow', 'dynamicTitle', 'showLeftButton', 'showRightButton','RightButtonText']);
+  const emits = defineEmits(['click-right']);
 
-  defineProps({
-    title:{
-      type:String,
-      default:'首页'
-    },
-    Back:{
-      type:Boolean,
-      default:true
-    },
-  });
-  const goBack = () => {
-    router.go(-1); // 返回上一页
+  console.log(props.dynamicTitle);
+  // 根据 props 中的值来动态设置相应的属性
+  const showLeftArrow = computed(() => props.showLeftButton);
+  const leftText = computed(() => (props.showLeftButton ? '返回' : ''));
+  const rightText = computed(() => (props.showRightButton ? props.RightButtonText : ''));
+
+  const onClickLeft = () => history.back();
+  const onClickRight = () => {
+    emits('click-right');
   };
 </script>
 
+
 <style lang='scss' scoped>
-.van-nav-bar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
+  .van-nav-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: transparent;
+
+  }
 
 </style>
