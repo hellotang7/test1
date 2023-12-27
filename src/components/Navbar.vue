@@ -1,11 +1,10 @@
 <template>
   <div class='nav'>
     <RouterLink to='/home' >
-      <Icon   iconSrc='icon-shouye' />
-
+      <Icon name='wap-home-o' />
     </RouterLink>
     <RouterLink to='/user' >
-      <Icon   iconSrc='icon-gerenzhongxin' />
+      <Icon name='manager-o' />
     </RouterLink>
 
   </div>

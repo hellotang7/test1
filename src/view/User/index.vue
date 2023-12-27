@@ -1,21 +1,43 @@
 <template>
-  <div class="user">
-    <h1>个人中心</h1>
-    <van-button @click="userQuit" type="primary">退出登录</van-button>
+  <div class='user'>
+    <div>
+      <span><div><img :src='ImageUrl'></div></span>
+    </div>
+    <div>
+      <span>用户名：</span>
+      <span>{{ formData.username }}</span>
+    </div>
+    <div>
+      <span>昵称：</span>
+      <span>{{ formData.nickname }}</span>
+    </div>
+
+
+    <van-button @click='userQuit' type='primary'>退出登录</van-button>
 
 
   </div>
-  <Nav/>
+  <Nav />
 
 </template>
 
-<script lang="ts" setup>
-  import Nav from '@/components/Navbar.vue'
+<script lang='ts' setup>
+  import Nav from '@/components/Navbar.vue';
   import { useAuthStore } from '@/stores/authStore';
   import { currentUserInfo, logout } from '@/api/auth';
   import router from '@/router';
   import { showFailToast, showSuccessToast } from 'vant';
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
+
+  const ImageUrl = ref(`/api/auth/getAvatar?t=${new Date().getTime()}`);
+
+
+  const formData = ref({
+    username: useAuthStore().userInfo.username,
+    nickname: useAuthStore().userInfo.nickName
+
+  });
+
 
   const authStore = useAuthStore();
   onMounted(() => {
@@ -36,45 +58,55 @@
 
 
   const userQuit = async () => {
-    const isAuthenticated = localStorage.getItem('Authenticated')
+    const isAuthenticated = useAuthStore().isAuthenticated;
 
     console.log(isAuthenticated);
     if (isAuthenticated) {
       logout().then((res) => {
-        router.push({name: 'login'});
+        router.push({ name: 'login' });
         useAuthStore().clearUserInfo();
 
         showSuccessToast(res.data.msg);
-
 
 
       });
     } else {
       useAuthStore().clearUserInfo();
       showFailToast('已退出，请勿频繁点击');
-      router.push({name: 'login'});
+      router.push({ name: 'login' });
     }
   };
 
 
 </script>
 
-<style lang="scss">
-  .user{
+<style lang='scss'>
+  .user {
+
     height: 100%;
     background-image: url("@/assets/img/ios-bg.jpg");
     background-position: center;
     background-size: cover;
-display: flex;
+
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    &::before {
-      content: "";
-      position: absolute; /* 一定要用绝对定位 */
+    //border: 1px solid red;
+
+
+    div{
+
       width: 100%;
-      height: 100%;
-      backdrop-filter: blur(3px); /* 模糊半径 */
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+        div{
+
+          height: 150px;
+          width: 150px;
+      }
     }
   }
 </style>

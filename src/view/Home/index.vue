@@ -1,21 +1,22 @@
 <template>
 
   <div class='home'>
+<!--    <Title title='首页' :Black='false' />-->
+
     <van-row :gutter='[20, 20]'>
       <van-col span='6'>
 
         <RouterLink to='/equipment'>
-          <Icon appName='设备管理' iconSrc='icon-shebei' />
-
+          <Icon appName='设备管理' name='newspaper-o' />
         </RouterLink>
       </van-col>
 
-      <van-col span='6'>
-        <RouterLink to='/1'>
-          <Icon appName='试验' iconSrc='icon-yuandian1-copy' />
-        </RouterLink>
+<!--      <van-col span='6'>-->
+<!--        <RouterLink to='/1'>-->
+<!--          <Icon appName='试验' name='warn-o' />-->
+<!--        </RouterLink>-->
 
-      </van-col>
+<!--      </van-col>-->
 
     </van-row>
 

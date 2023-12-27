@@ -1,4 +1,3 @@
-`
 <template>
   <div class='equipment'>
     <Title title='设备管理' :Black='true' />
@@ -8,14 +7,20 @@
       <van-dropdown-item v-model='value' :options='options' />
       <van-dropdown-item title='筛选'>
 
-        <van-field v-model='filteringDataForms.no' label='设备编号' />
-        <van-field v-model='filteringDataForms.name' label='设备名称' />
-        <MyPicker v-model='filteringDataForms.workStatus' :label="'工作状态'" :placeholder="'选择城市'" :columns='columns' />
-        <MyPicker v-model='filteringDataForms.relayStatus' :label="'继电器状态'" :placeholder="'选择城市'" :columns='columns' />
-        <MyPicker v-model='filteringDataForms.defNo' :label="'设备定义'" :placeholder="'选择城市'" :columns='columns' />
+        <van-field v-model='filteringDataForms.no' label='设备编号'  placeholder='输入编号'/>
+        <van-field v-model='filteringDataForms.name' label='设备名称' placeholder='输入名称'/>
+        <MyPicker v-model='filteringDataForms.workStatus' :label="'工作状态'" :placeholder="'选择工作状态'"
+                  :columns='workStatusList' />
+        <MyPicker v-model='filteringDataForms.relayStatus' :label="'继电器状态'" :placeholder="'选择继电器状态'"
+                  :columns='relayStatusList' />
+        <MyPicker v-model='filteringDataForms.defNo' :label="'设备定义'" :placeholder="'选择设备定义'"
+                  :columns='defNoList' />
 
 
-        <div style='padding: 5px 16px;'>
+        <div class='but' style='padding: 5px 16px;'>
+          <van-button plain type='primary' block round @click='onReset'>
+            重置
+          </van-button>
           <van-button type='primary' block round @click='onConfirm'>
             确认
           </van-button>
@@ -25,8 +30,9 @@
 
     <div v-show='value===0'>
       <van-pull-refresh v-model='refreshing' @refresh='onRefresh'>
+
         <van-list v-model:loading='loading' :finished='finished' finished-text='没有更多了' @load='onLoad'>
-          <van-cell v-for='item in equipmentList' :key='item.value' :title='item.name' is-link>
+          <van-cell v-for='item in equipmentList' :key='item.value' :title='item.name'>
 
             <van-button
               v-if="item.defNo === 'AION_FRQJCH' || item.defNo === 'NWD_FRQJCH'"
@@ -63,8 +69,9 @@
     <div v-show='value===1'>
       22
     </div>
-
   </div>
+
+
 </template>
 
 <script setup lang='ts'>
@@ -74,7 +81,7 @@
   import MyPicker from '@/components/CityPicker.vue';
   import { findListByTableParameter } from '@/api/system';
   import { ctrlRelay, restart } from '@/api/iotEquipment';
-  import { showToast } from 'vant';
+  import { closeToast, showLoadingToast, showToast } from 'vant';
 
 
   onMounted(() => {
@@ -87,36 +94,45 @@
   const value = ref(0);//设备页选择
 
   const options = [//设备页列表
-    { text: '设备', value: 0 },
+    { text: '设备', value: 0 }
     // { text: '设备固件', value: 1 }
   ];
 
-  //选择器选中数据
-  const selectedCity = ref('');
+
   //选择器列表数据
-  const columns = ref([
-    { text: '杭州', value: 'Hangzhou' },
-    { text: '宁波', value: 'Ningbo' },
-    { text: '温州', value: 'Wenzhou' },
-    { text: '绍兴', value: 'Shaoxing' },
-    { text: '湖州', value: 'Huzhou' }
+  const workStatusList = ref([
+    { text: '在线', value: 1 },
+    { text: '离线', value: 0 }
+  ]);
+  const relayStatusList = ref([
+    { text: '开', value: 'true' },
+    { text: '关', value: 'false' }
   ]);
 
+  const defNoList = ref([
+    { text: 'NWD防入侵检测盒', value: 'NWD_FRQJCH' },
+    { text: 'AION防入侵检测盒', value: 'AION_FRQJCH' },
+    { text: 'AION播放器', value: 'AION_PLAYER' },
+    { text: '黄石云摄像头', value: 'EZVIZ_CAMERA' }
+  ]);
 
 
   //筛选数据表单
   const filteringDataForms = ref({
-    no:null,
-    name:null,
-    workStatus:null,
-    relayStatus:null,
-    defNo:null,
-    createTime:null,
-    lastOnLineTime:null
-  })
+    no: null,
+    name: null,
+    workStatus: null,
+    relayStatus: null,
+    defNo: null,
+    createTime: null,
+    lastOnLineTime: null
+  });
 
+
+  //筛选
   const onConfirm = () => {
 
+    showLoadingToast({ duration: 0, message: '加载中...', forbidClick: true });
     const parameter = {
       filter: [
         {
@@ -130,7 +146,7 @@
         }, {
           key: 'defNo',
           expression: 'in',
-          value: filteringDataForms.value.defNo
+          value: filteringDataForms.value.defNo ? [filteringDataForms.value.defNo] : null
         }, {
           key: 'workStatus',
           expression: '=',
@@ -138,7 +154,8 @@
         }, {
           key: 'relayStatus',
           expression: '=',
-          value: filteringDataForms.value.relayStatus
+          value: filteringDataForms.value.relayStatus === 'true' ? true : (filteringDataForms.value.relayStatus === 'false' ? false : null)
+
         }, {
           key: 'createTime',
           type: 'timestamp',
@@ -149,7 +166,7 @@
           type: 'timestamp',
           expression: '[]',
           value: filteringDataForms.value.lastOnLineTime
-        },
+        }
       ],
       sort: [
         {
@@ -160,44 +177,52 @@
     };
 
     console.log(parameter.filter);
+    menuRef.value.close();
 
     findListByTableParameter('iotEquipment', {
       page: 1,
-      pageSize: 10 , // 你可以根据需求调整每次加载的数据量
+      pageSize: 99999, // 你可以根据需求调整每次加载的数据量
       parameter: JSON.stringify(parameter)
 
       // 其他参数，如果需要的话
     }).then((res: any) => {
+      // equipmentList.value = []; // 清空设备数据
+      // equipmentList.value = equipmentList.value.concat(res.data.data.list);
+
       equipmentList.value = res.data.data.list;
       console.log(res.data.data.total);
+      // finished.value = true;
 
-      menuRef.value.close();
 
-      // 加载状态结束
-      // loading.value = false;
-      // // 判断是否已加载所有数据
-      // if (equipmentList.value.length >= res.data.data.total) {
-      //   finished.value = true;
-      // }
-
+    }).finally(() => {
+      closeToast(true);
     });
-
-
   };
+  //重置
+  const onReset = () => {
+    console.log(1,filteringDataForms.value);
+    filteringDataForms.value = {
+      no: null,
+      name: null,
+      workStatus: null,
+      relayStatus: null,
+      defNo: null,
+      createTime: null,
+      lastOnLineTime: null
+    };
+    console.log(2,filteringDataForms.value);
 
 
-
+    equipmentList.value = [];
+    onLoad();
+    menuRef.value.close();
+  };
 
 
   //设备列表刷新
   const onRefresh = () => {
     equipmentList.value = [];
     refreshing.value = true;
-    // if (Object.values(filteringDataForms.value).every(value => value === null)) {
-    //   console.log(1); // 如果所有值都为 null
-    // } else {
-    //   console.log(2); // 如果有至少一个值不为 null
-    // }
     onLoad();
     refreshing.value = false;
   };
@@ -220,7 +245,7 @@
 
     findListByTableParameter('iotEquipment', {
       page: currentPage + 1,  // 加载下一页
-      pageSize: 15,
+      pageSize: 15
       // 其他参数，如果需要的话
     }).then((res: any) => {
       console.log(res.data.data.total);
@@ -245,50 +270,29 @@
     { text: '统关' },
     { text: '重启' }
   ];
+
+  //设备开关选项
   const equipmentOnOffActions = (action, no) => {
+    // 处理接口响应
+    const handleResponse = (res) => {
+      if (res.data.success) {
+        showToast({ message: res.data.msg, position: 'top' });
+      } else {
+        showToast({ message: res.data.msg, position: 'top' });
+      }
+    };
+
     switch (action.text) {
       case '统开':
-        ctrlRelay(no, 3, true).then((res) => {
-          if (res.data.success) {
-            showToast({ message: res.data.msg, position: 'top' });
-          } else {
-            showToast({ message: res.data.msg, position: 'top' });
-          }
-        }).catch(() => {
-          showToast({ message: '请求异常', position: 'top' });
-
-        }).finally(() => {
-        });
-
+        ctrlRelay(no, 3, true).then(handleResponse)
         break;
       case '统关':
-        ctrlRelay(no, 3, false).then((res) => {
-          if (res.data.success) {
-            showToast({ message: res.data.msg, position: 'top' });
-          } else {
-            showToast({ message: res.data.msg, position: 'top' });
-          }
-        }).catch(() => {
-          showToast({ message: '请求异常', position: 'top' });
-        }).finally(() => {
-        });
-
+        ctrlRelay(no, 3, false).then(handleResponse)
         break;
       case '重启':
-        restart(no).then((res) => {
-          if (res.data.success) {
-            showToast({ message: res.data.msg, position: 'top' });
-          } else {
-            showToast({ message: res.data.msg, position: 'top' });
-          }
-        }).catch(() => {
-          showToast({ message: '请求异常', position: 'top' });
-        }).finally(() => {
-        });
+        restart(no).then(handleResponse)
         break;
     }
-
-
   };
 
 
@@ -310,16 +314,24 @@
     .van-cell.van-cell--clickable {
       //padding: 0 10px;
     }
-//
-//.van-pull-refresh{
-//  border: 1px solid red;
-//  min-height: 62vh;
-//}
+
+    //
+    //.van-pull-refresh{
+    //  border: 1px solid red;
+    //  min-height: 62vh;
+    //}
 
     .van-cell__value {
       .van-popover__wrapper {
         margin-left: 4px;
       }
+    }
+
+    .van-popup.van-popup--top.van-dropdown-item__content {
+     .but{
+       display: flex;
+     }
+
     }
   }
 

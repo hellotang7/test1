@@ -1,7 +1,8 @@
 <template>
   <div class='app-icon' @click='handleClick(appName)' @mousedown.prevent='handleMouseDown' @mouseup.prevent='handleMouseUp'>
     <div class='icon-container'>
-      <i class="aion-window-icon" :class='iconSrc'></i>
+      <van-icon :name="name" />
+<!--      <i class="aion-window-icon" :class='iconSrc'></i>-->
     </div>
     <div class='label'>{{ appName }}</div>
   </div>
@@ -11,7 +12,7 @@
 
   defineProps({
     appName: String,
-    iconSrc: String,
+    name: String,
   });
 
   const handleClick = (appName) => {
@@ -65,8 +66,9 @@
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #00F9E5, #6772FF);
-      .aion-window-icon {
+      .van-icon {
         font-size: 38px;
+        color: #e9edf0;
       }
     }
 

@@ -62,10 +62,11 @@
 
 
   const onSubmit = async () => {
+
       loginUserByUsernameAndPassword({
         username: formCustom.value.username,
         password: formCustom.value.password
-      }).then((res) => {
+      },).then((res) => {
         if (res.data.code === 200) {
           authStore.setToken(res.data.data.token);
           localStorage.setItem('token', res.data.data.token);
@@ -78,8 +79,7 @@
           // showNotify({ type: 'danger', message: res.data.msg });
           showFailToast(res.data.msg);
 
-          formCustom.value.username = '';
-          formCustom.value.password = '';
+
         }
       }).catch((err) => {
         showNotify({ type: 'danger', message: err.message });
