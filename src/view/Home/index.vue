@@ -10,12 +10,12 @@
         </RouterLink>
       </van-col>
 
-      <!--      <van-col span='6'>-->
-      <!--        <RouterLink to='/1'>-->
-      <!--          <Icon appName='试验' name='warn-o' />-->
-      <!--        </RouterLink>-->
+            <van-col span='6'>
+              <RouterLink to='/1'>
+                <Icon appName='试验' name='warn-o' />
+              </RouterLink>
 
-      <!--      </van-col>-->
+            </van-col>
 
     </van-row>
 

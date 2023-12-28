@@ -11,6 +11,7 @@ export default defineConfig({
     vue(),
     Components({
       resolvers: [VantResolver()],
+
     }),
   ],
   resolve: {

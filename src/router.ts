@@ -42,18 +42,18 @@ const routes = [
       title: '设备管理'
     }
   },
+  // {
+  //   name: 'test',
+  //   path: '/1',
+  //   component: () => import('@/test.vue'),
+  //   meta: {
+  //     title: '试验'
+  //   }
+  // },
   {
     name: 'test',
     path: '/1',
-    component: () => import('@/test.vue'),
-    meta: {
-      title: '试验'
-    }
-  },
-  {
-    name: 'title',
-    path: '/2',
-    component: () => import('@/components/Title.vue'),
+    component: () => import('@/components/EquipmentAddEdit.vue'),
     meta: {
       title: '试验'
     }

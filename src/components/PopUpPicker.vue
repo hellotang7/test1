@@ -7,6 +7,8 @@
       :label='label'
       :placeholder='placeholder'
       @click='showPicker = true'
+      :rules="showRules ? [{ required: true, message: '必选' }]:null"
+
     />
     <van-popup v-model:show='showPicker' round position='bottom'>
       <van-picker
@@ -19,12 +21,13 @@
 </template>
 
 <script setup>
-  import { ref, defineProps, defineEmits, watch } from 'vue';
+  import { ref, defineProps, defineEmits, watch, computed } from 'vue';
 
-  const props = defineProps(['label', 'placeholder', 'columns', 'modelValue']);
+  const props = defineProps(['label', 'placeholder', 'columns', 'modelValue','showRules']);
   const emit = defineEmits(['update:modelValue']);
 
   const fieldValue = ref(null);
+  const showLeftArrow = computed(() => props.showRules);
 
 
   watch(() => props.modelValue, (newValue, oldValue) => {

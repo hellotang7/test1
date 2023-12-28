@@ -8,7 +8,11 @@
         :src='ImageUrl'
         fit='contain'
 
-      />
+      >
+        <template v-slot:loading>
+          <van-loading type="spinner" size="40" />
+        </template>
+      </van-image>
     </div>
     <div class='userCurrent'>
       <h2>{{ formData.username }}</h2>
@@ -109,11 +113,13 @@
       border: 0.29vh solid white;
       color: #fff;
       box-shadow: 2px 4px 11px #00000040;
-      margin-top: 6vh;
+      //margin-top: 2vh;
       overflow: hidden;
 
-      .icon {
-        color: white;
+      .van-image.icon {
+
+        //height: 160%;
+        //width: 160%;
       }
     }
 
