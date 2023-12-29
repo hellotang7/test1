@@ -65,7 +65,7 @@
                          @select='((val)=>{equipmentOnOffActions(val,item.no)})'
                          placement='left-start'>
               <template #reference>
-                <van-button type='primary' size='mini'>开关选项</van-button>
+                <van-button type='primary' size='mini'>按钮选项</van-button>
               </template>
             </van-popover>
 
@@ -75,7 +75,7 @@
                          @select='((val)=>{equipmentOnOffActions(val,item.no)})'
                          placement='left-start'>
               <template #reference>
-                <van-button type='primary' size='mini'>开关选项</van-button>
+                <van-button type='primary' size='mini'>按钮选项</van-button>
               </template>
             </van-popover>
 
@@ -85,7 +85,7 @@
                          @select='((val)=>{equipmentOnOffActions(val,item.no)})'
                          placement='left-start'>
               <template #reference>
-                <van-button type='primary' size='mini'>开关选项</van-button>
+                <van-button type='primary' size='mini'>按钮选项</van-button>
               </template>
             </van-popover>
 
@@ -124,13 +124,13 @@
     if (id) {
       console.log(id);
       router.push({
-        path: '/1',
+        path: '/addEdit',
         query: { id }
       });
     } else {
       //新增
       router.push({
-        path: '/1'
+        path: '/addEdit'
       });
     }
 
@@ -386,6 +386,13 @@
         case '重启':
           await restart(no).then(showToastMessage);
           break;
+          case '直播':
+            router.push({
+              path: '/live',
+              query: { no }
+            });
+          // await openEzvizLiveWindow(no).then(showToastMessage);
+          break;
         default:
           showToast({ message: '未知操作', position: 'top' });
       }
@@ -415,7 +422,7 @@
     }
 
     :deep(.van-popover__wrapper) {
-      margin: 0 24px 6px 4px;
+      margin: 0 10px 6px 4px;
 
     }
 

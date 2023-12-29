@@ -7,6 +7,7 @@
 <script lang='ts' setup>
   import { ref, onMounted } from 'vue';
 
+  //自动计算高度
   const appHeight = ref('100vh');
   onMounted(() => {
     setViewportHeight();

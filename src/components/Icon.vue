@@ -1,5 +1,5 @@
 <template>
-  <div class='app-icon' @click='handleClick(appName)' @mousedown.prevent='handleMouseDown' @mouseup.prevent='handleMouseUp'>
+  <div class='app-icon' @click='handleClick(appName)' @touchstart='handleMouseDown' @touchend='handleMouseUp'>
     <div class='icon-container'>
       <van-icon :name="name" />
 <!--      <i class="aion-window-icon" :class='iconSrc'></i>-->
@@ -40,8 +40,9 @@
 
 <style scoped lang='scss'>
   .pressed {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    transform: translateY(2px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 rgba(255, 255, 255, 0.8), inset 18px 18px 48px rgba(0, 0, 0, 0.1), inset 0px 4px 30px rgb(255, 255, 255);
+
+    transition: all .2s ease-out;
   }
 
   .app-icon {
@@ -61,11 +62,21 @@
       border-radius: 15px;
       overflow: hidden;
       margin-bottom: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      //box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       display: flex;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #00F9E5, #6772FF);
+      //.aa{
+      //  border-radius: 10px;
+      box-shadow: 18px 19px 27px rgba(0, 0, 0, 0.2), -2px -9px 110px rgb(243, 255, 255);
+
+      &:hover {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 rgba(255, 255, 255, 0.8), inset 18px 18px 48px rgba(0, 0, 0, 0.1), inset 0px 4px 30px rgb(255, 255, 255);
+        transition: all .2s ease-out;
+        }
+      //}
+
       .van-icon {
         font-size: 38px;
         color: #e9edf0;

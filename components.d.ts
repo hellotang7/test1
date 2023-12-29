@@ -9,7 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     CityPicker: typeof import('./src/components/CityPicker.vue')['default']
     Equipment: typeof import('./src/components/Tags/Equipment/index.vue')['default']
-    EquipmentAddEdit: typeof import('./src/components/EquipmentAddEdit.vue')['default']
+    EquipmentAddEdit: typeof import('./src/components/Tags/Equipment/EquipmentAddEdit.vue')['default']
+    EzvizLive: typeof import('./src/components/Tags/Equipment/EzvizLive.vue')['default']
     Icon: typeof import('./src/components/Icon.vue')['default']
     IsLoading: typeof import('./src/components/IsLoading.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']

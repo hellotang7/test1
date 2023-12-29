@@ -54,10 +54,6 @@
 
 
 
-
-
-
-
   const minDate = new Date(2020, 0, 1);
   const maxDate = new Date(2025, 5, 1);
 
